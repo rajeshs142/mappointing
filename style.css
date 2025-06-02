@@ -1,0 +1,979 @@
+/* CSS Variables */
+:root {
+    /* Colors */
+    --primary-bg: #eef1f5;
+    --secondary-bg: #ffffff;
+    --text-color: #333;
+    --primary-accent: #4a90e2;
+    --primary-accent-darker: #357ABD;
+    --border-color: #d1d8e0;
+    --hint-color: #5a5a5a;
+    
+    /* Feedback Colors */
+    --correct-bg: #d4edda;
+    --correct-text: #155724;
+    --correct-border: #28a745;
+    --incorrect-bg: #f8d7da;
+    --incorrect-text: #721c24;
+    --incorrect-border: #dc3545;
+
+    /* Layout Dimensions */
+    --sidebar-width: 280px;
+    --sidebar-width-collapsed: 60px;
+    --question-pane-width: 380px;
+    --header-height-mobile: 50px;
+}
+
+/* Dark Mode Variables */
+body.dark-mode {
+    --primary-bg: #2c3e50;
+    --secondary-bg: #34495e;
+    --text-color: #ecf0f1;
+    --primary-accent: #5dade2;
+    --primary-accent-darker: #3498db;
+    --border-color: #4a6179;
+    --hint-color: #bdc3c7;
+    --correct-bg: #27ae60;
+    --correct-text: #ffffff;
+    --correct-border: #2ecc71;
+    --incorrect-bg: #c0392b;
+    --incorrect-text: #ffffff;
+    --incorrect-border: #e74c3c;
+}
+
+/* Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    line-height: 1.6;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Main Layout */
+#app-container-layout {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Left Sidebar */
+#left-sidebar-pane {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    background-color: var(--secondary-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s ease-in-out, min-width 0.3s ease-in-out;
+    position: relative;
+    z-index: 20;
+}
+
+#left-sidebar-pane.collapsed {
+    width: var(--sidebar-width-collapsed);
+    min-width: var(--sidebar-width-collapsed);
+}
+
+#left-sidebar-pane.collapsed .nav-title-full,
+#left-sidebar-pane.collapsed .sidebar-title-full {
+    display: none;
+}
+
+#left-sidebar-pane.collapsed .sidebar-title-collapsed {
+    display: inline;
+}
+
+#left-sidebar-pane.collapsed #settings-panel .setting-item label {
+    justify-content: center;
+}
+
+#left-sidebar-pane.collapsed #settings-panel .setting-item input[type="checkbox"] {
+    margin-right: 0;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+    padding: 10px;
+    background-color: var(--primary-accent);
+    color: white;
+    text-align: center;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height-mobile);
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 1.4em;
+    flex-grow: 1;
+    text-align: center;
+}
+
+#sidebar-toggle-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 0 10px;
+    display: inline-block;
+}
+
+#sidebar-toggle-btn .arrow-left {
+    transform: rotate(180deg);
+}
+
+/* Sidebar Content */
+#sidebar-scrollable-content {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+#sections-nav {
+    padding: 15px 10px;
+}
+
+#sections-nav h3,
+#sections-nav h4 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: var(--primary-accent-darker);
+}
+
+#sections-nav h4 {
+    font-size: 0.95em;
+    margin-left: 5px;
+    margin-top: 10px;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+#sections-nav #random-quiz-sections{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#sections-nav button,
+#startRandomQuizBtnSidebar {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 8px 10px;
+    margin-bottom: 5px;
+    background-color: transparent;
+    color: var(--text-color);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+#sections-nav button:hover {
+    background-color: var(--primary-bg);
+    border-color: var(--border-color);
+}
+
+#startRandomQuizBtnSidebar {
+    margin-top: 15px;
+    background-color: var(--primary-accent) !important;
+    color: white;
+    text-align: center;
+    /* font-weight: bold; */
+}
+
+#startRandomQuizBtnSidebar:hover {
+    background-color: var(--primary-accent-darker);
+}
+
+/* Settings Panel */
+#settings-panel {
+    padding: 15px 10px;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+#settings-panel h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: var(--primary-accent-darker);
+}
+
+#settings-panel .setting-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+#settings-panel .setting-item label {
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+#settings-panel input[type="checkbox"] {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+    padding: 10px 15px;
+    text-align: center;
+    font-size: 0.8em;
+    color: var(--hint-color);
+    border-top: 1px solid var(--border-color);
+    background-color: var(--secondary-bg);
+    flex-shrink: 0;
+}
+
+/* Question/Interaction Pane */
+#question-interaction-pane {
+    width: var(--question-pane-width);
+    min-width: 300px;
+    background-color: var(--secondary-bg);
+    border-right: 1px solid var(--border-color);
+    padding: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Mobile Header */
+#mobile-header {
+    display: none;
+    background-color: var(--primary-accent);
+    color: white;
+    padding: 0 15px;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height-mobile);
+    flex-shrink: 0;
+    z-index: 15;
+}
+
+#mobile-header span:last-child {
+    font-weight: bold;
+}
+
+#mobile-sidebar-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.6em;
+    cursor: pointer;
+}
+
+/* Content Areas */
+#quiz-active-message,
+#quiz-content-area,
+#end-screen-content {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+/* View Management */
+.hidden-view {
+    display: none !important;
+}
+
+.active-view {
+    display: block;
+}
+
+#quiz-active-message {
+    text-align: center;
+    margin-top: 30px;
+    color: var(--hint-color);
+}
+
+#quiz-active-message p {
+    font-size: 1.1em;
+}
+
+/* Quiz Status */
+#quiz-status-header {
+    /* display: flex; */
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: var(--primary-bg);
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+#quiz-status-header #current-quiz-title {
+    color: var(--primary-accent-darker);
+    flex-grow: 1;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 10px;
+}
+
+/* Question Display */
+#question-display {
+    margin-bottom: 15px;
+    padding: 12px;
+    background-color: var(--primary-bg);
+    border-left: 4px solid var(--primary-accent);
+    border-radius: 4px;
+}
+
+#question-display h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 1.15em;
+}
+
+.hint {
+    font-style: italic;
+    color: var(--hint-color);
+    font-size: 0.9em;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Answer Input */
+#answer-input-area {
+    margin-bottom: 15px;
+}
+
+#mcq-options-container button {
+    display: block;
+    width: 100%;
+    margin: 6px 0;
+    padding: 10px;
+    background-color: var(--secondary-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.95em;
+    text-align: left;
+}
+
+#mcq-options-container button:hover:not(.selected) {
+    background-color: var(--primary-bg);
+}
+
+#mcq-options-container button.selected {
+    background-color: var(--primary-accent);
+    color: white;
+    border-color: var(--primary-accent-darker);
+}
+
+/* Feedback Display */
+#feedback-display {
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 4px;
+    text-align: left;
+}
+
+#feedback-display.correct {
+    background-color: var(--correct-bg);
+    border-left: 4px solid var(--correct-border);
+    color: var(--correct-text);
+}
+
+#feedback-display.incorrect {
+    background-color: var(--incorrect-bg);
+    border-left: 4px solid var(--incorrect-border);
+    color: var(--incorrect-text);
+}
+
+#feedback-display p {
+    margin: 3px 0;
+    font-size: 0.95em;
+}
+
+.significance-text-class {
+    font-style: italic;
+    margin-top: 8px !important;
+    font-size: 0.9em;
+    display: block;
+}
+
+/* End Screen */
+#end-screen-content {
+    text-align: center;
+    padding-top: 20px;
+}
+
+#end-screen-content h2 {
+    color: var(--primary-accent);
+    font-size: 1.4em;
+}
+
+/* Map Pane */
+#map-pane-container {
+    flex-grow: 1;
+    position: relative;
+    background-color: #cdd2d8;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+#map-overlay-info {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 1.8em;
+    z-index: 1000;
+    display: none;
+}
+
+/* Button Styles */
+button {
+    background-color: var(--primary-accent);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    margin: 5px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+button:hover:not(:disabled) {
+    background-color: var(--primary-accent-darker);
+}
+
+button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+body.dark-mode button:disabled {
+    background-color: #566573;
+    color: #95a5a6;
+}
+
+#submitAnswerBtn,
+#nextQuestionBtn,
+#returnToSectionsBtn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Utility Classes */
+.hint.hidden-by-setting,
+.significance-text-class.hidden-by-setting {
+    display: none !important;
+}
+
+.mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    display: none;
+}
+
+.mobile-overlay.active {
+    display: block;
+}
+
+/* Sidebar Section Items */
+.section-item-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.section-item-group .start-quiz-for-section-btn {
+    flex-grow: 1;
+    text-align: left;
+    margin-right: 5px; /* Space before view all button */
+    margin-bottom: 0; /* Remove default button margin */
+}
+.section-item-group .view-all-for-section-btn {
+    padding: 8px 10px; /* Adjust size */
+    background-color: var(--primary-bg);
+    color: var(--primary-accent);
+    border: 1px solid var(--border-color);
+    min-width: 40px; /* Ensure it's clickable */
+    flex-shrink: 0;
+    margin-bottom: 0;
+}
+.section-item-group .view-all-for-section-btn:hover {
+    background-color: var(--border-color);
+}
+
+
+/* Study Mode in Question Pane */
+#study-mode-content {
+    padding: 20px; /* Already has padding from parent */
+}
+#study-mode-content h3 {
+    color: var(--primary-accent-darker);
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+#study-items-list {
+    max-height: calc(100vh - 250px); /* Adjust based on other elements in pane */
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+.study-item-card {
+    background-color: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--primary-accent);
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    cursor: pointer; /* To indicate it can be clicked to focus map */
+}
+.study-item-card:hover {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-left-color: var(--primary-accent-darker);
+}
+.study-item-card h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+.study-item-card p {
+    margin: 3px 0;
+    font-size: 0.9em;
+}
+.study-item-card .hint {
+    color: var(--hint-color);
+}
+
+#study-mode-content button {
+    margin-right: 10px;
+}
+
+#sections-nav button {
+    width: auto;
+}
+
+.map-marker-label {
+    background: white;
+    position: absolute;
+    top: 42px;
+    left: 15px;
+    font-size: 14px !important;
+}
+
+#left-sidebar-pane.collapsed {
+    width: var(--sidebar-width-collapsed);
+    min-width: var(--sidebar-width-collapsed);
+    /* Add cursor to indicate it's clickable when collapsed */
+    cursor: pointer;
+}
+#left-sidebar-pane.collapsed .nav-title-full {
+    display: none;
+}
+#left-sidebar-pane.collapsed .sidebar-title-full {
+    display: none;
+}
+#left-sidebar-pane.collapsed .sidebar-title-collapsed {
+    display: inline;
+}
+#left-sidebar-pane.collapsed #settings-panel .setting-item label {
+    /* justify-content: center; */
+}
+#left-sidebar-pane.collapsed #settings-panel .setting-item input[type="checkbox"] {
+    margin-right: 0;
+}
+/* New: Hide the scrollable content when collapsed */
+#left-sidebar-pane.collapsed #sidebar-scrollable-content {
+    visibility: hidden;
+    opacity: 0; /* For a smoother transition if desired */
+    transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
+}
+
+#sidebar-scrollable-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    visibility: visible; /* Default state */
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out 0.1s, visibility 0.2s ease-in-out 0.1s; /* Delay for expand */
+}
+
+/* InfoWindow Custom Styling */
+.custom-infowindow-content {
+    padding: 5px; /* Add a little padding inside the InfoWindow */
+    max-width: 250px; /* Prevent it from getting too wide */
+    font-size: 0.9em;
+}
+
+.custom-infowindow-content h4 { /* Title inside InfoWindow */
+    margin: 0 0 5px 0;
+    font-size: 1.1em;
+    color: var(--primary-accent-darker);
+}
+
+.custom-infowindow-content p {
+    margin: 3px 0;
+    line-height: 1.4;
+}
+
+/* Dark Mode for InfoWindow */
+body.dark-mode .custom-infowindow-content {
+    /* Google Maps InfoWindow has its own default light background.
+       Overriding it completely can be tricky as it might use inline styles or !important.
+       However, we can style our inner content.
+       For a more thorough dark mode on the InfoWindow *bubble* itself,
+       you might need to use more advanced techniques like custom overlays,
+       or see if newer versions of the API offer more styling hooks.
+       For now, we style the content *inside*. */
+    color: var(--text-color); /* Uses dark mode text color */
+    background-color: var(--secondary-bg);
+}
+
+body.dark-mode .custom-infowindow-content h4 {
+    color: var(--primary-accent); /* Uses dark mode accent for title */
+    background-color: var(--secondary-bg); /* Ensure background matches */
+}
+
+/* You might want to style the default InfoWindow close button if it clashes.
+   This is often done by targeting its specific classes with !important,
+   e.g., .gm-style-iw-c button (inspect to find the exact class).
+   Example (may need adjustment):
+*/
+body.dark-mode .gm-style-iw-c button span, /* Close button 'x' */
+body.dark-mode .gm-style-iw-tc::after { /* Arrow pointing to marker */
+    /* filter: invert(1) hue-rotate(180deg); /* A common trick to invert colors */
+    /* This is a bit of a hack and might not look perfect.
+       The best approach is if Google Maps API allows styling these directly or uses CSS vars. */
+    color: var(--primary-accent); /* Uses dark mode accent for title */
+    background-color: var(--secondary-bg); /* Ensure background matches */
+}
+
+/* Left Sidebar Pane */
+#left-sidebar-pane {
+    width: var(--sidebar-width);
+    min-width: 250px;
+    background-color: var(--secondary-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column; /* Key for stacking header, content, settings, footer */
+    height: 100vh; /* Ensure it takes full viewport height */
+    transition: width 0.3s ease-in-out, min-width 0.3s ease-in-out;
+    position: relative;
+    z-index: 20;
+    /* overflow-y: hidden; NO, let flex children handle scroll */
+}
+
+#left-sidebar-pane.collapsed {
+    width: var(--sidebar-width-collapsed);
+    min-width: var(--sidebar-width-collapsed);
+    cursor: pointer;
+}
+/* ... (other .collapsed styles for hiding text remain the same) ... */
+#left-sidebar-pane.collapsed #settings-panel { /* When sidebar is collapsed, settings might also hide text or change layout */
+    /* padding: 10px 5px; /* Smaller padding when collapsed */
+}
+#left-sidebar-pane.collapsed #settings-panel h3,
+#left-sidebar-pane.collapsed #settings-panel .setting-item .nav-title-full {
+    display: none; /* Hide text in settings when sidebar is collapsed */
+}
+#left-sidebar-pane.collapsed #settings-panel .setting-item {
+    justify-content: center; /* Center checkboxes */
+}
+#left-sidebar-pane.collapsed #settings-panel .setting-item input[type="checkbox"] {
+    margin-right: 0;
+}
+
+
+.sidebar-header {
+    padding: 10px;
+    background-color: var(--primary-accent);
+    color: white;
+    text-align: center;
+    flex-shrink: 0; /* Prevent shrinking */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height-mobile); /* Or a fixed desktop header height */
+}
+/* ... (sidebar-header h2, #sidebar-toggle-btn styles) ... */
+
+
+#sidebar-scrollable-content { /* Contains #sections-nav */
+    flex-grow: 1; /* Takes up available vertical space */
+    overflow-y: auto; /* This part scrolls if #sections-nav is too long */
+    /* visibility and opacity transitions remain */
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out 0.1s, visibility 0.2s ease-in-out 0.1s;
+}
+/* Visibility hidden for collapsed sidebar scrollable content */
+#left-sidebar-pane.collapsed #settings-panel,
+#left-sidebar-pane.collapsed #sidebar-scrollable-content {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
+}
+
+
+#sections-nav {
+    padding: 15px 10px;
+}
+/* ... (other #sections-nav styles) ... */
+
+
+#settings-panel {
+    padding: 15px 10px;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0; /* Prevent shrinking - STICKY AT BOTTOM before footer */
+    background-color: var(--secondary-bg); /* Ensure it has a background */
+}
+#settings-panel h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: var(--primary-accent-darker);
+}
+/* ... (other #settings-panel label, input styles) ... */
+
+
+.sidebar-footer {
+    padding: 10px 15px;
+    text-align: center;
+    font-size: 0.8em;
+    color: var(--hint-color);
+    border-top: 1px solid var(--border-color);
+    background-color: var(--secondary-bg); /* Ensure it has a background */
+    flex-shrink: 0; /* Prevent shrinking - STICKY AT BOTTOM */
+}
+
+
+/* ... (Middle Pane, Map Pane, Mobile Responsiveness styles remain the same) ... */
+
+/* Ensure that when the sidebar is collapsed, the settings text also hides if desired */
+#left-sidebar-pane.collapsed #settings-panel h3,
+#left-sidebar-pane.collapsed #settings-panel .nav-title-full { /* Assuming setting labels use .nav-title-full for text part */
+    display: none;
+}
+#left-sidebar-pane.collapsed #settings-panel .setting-item {
+    /* You might want to center the checkboxes if the labels are hidden */
+    justify-content: center;
+}
+#left-sidebar-pane.collapsed #settings-panel .setting-item input[type="checkbox"] {
+    margin-left: 0; /* Adjust if they were centered before */
+}
+
+/* Left Sidebar Pane */
+#left-sidebar-pane {
+    /* ... existing styles ... */
+    /* Ensure it can be positioned correctly for mobile overlay */
+    /* position: fixed; Change to fixed for mobile overlay behavior */
+    left: 0; top: 0; height: 100%; /* Default for desktop, will be overridden by mobile */
+    transition: width 0.3s ease-in-out, min-width 0.3s ease-in-out, left 0.3s ease-in-out; /* Add left transition */
+}
+
+/* ... (existing .collapsed styles) ... */
+
+.sidebar-header {
+    /* ... existing styles ... */
+    position: relative; /* For positioning close button if needed */
+}
+
+#sidebar-toggle-btn { /* Desktop toggle button */
+    /* ... existing styles ... */
+    display: inline-block; /* Default for desktop */
+}
+
+#mobile-sidebar-close-btn { /* Mobile close button inside sidebar */
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8em; /* Make it prominent */
+    cursor: pointer;
+    padding: 0 10px;
+    display: none; /* Hidden by default, shown on mobile when sidebar is open */
+    position: absolute; /* Position it nicely, e.g., top right of sidebar header */
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+
+/* Mobile Overlay */
+.mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 99; /* Below sidebar, above content */
+    display: none; /* Toggled by JS */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.mobile-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    #app-container-layout {
+        flex-direction: column;
+        /* height: 100%; /* Might already be set */
+        /* position: relative; /* From before */
+    }
+
+    #sidebar-toggle-btn { display: none !important; } /* Hide desktop toggle fully on mobile */
+    /* mobile-header (for question pane) still uses mobile-sidebar-toggle (hamburger) */
+
+
+    #left-sidebar-pane {
+        left: -100%; /* Off-screen by default */
+        width: 80%;   /* Or your preferred mobile width */
+        max-width: 300px;
+        /* height: 100%; full height overlay from its default fixed positioning */
+        border-right: 1px solid var(--border-color); /* It will have a right border again */
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2); /* Add shadow when it slides in */
+        /* transition for left is already on the default style */
+    }
+    #left-sidebar-pane.mobile-sidebar-open {
+        left: 0; /* Slide in */
+    }
+    #left-sidebar-pane.mobile-sidebar-open #mobile-sidebar-close-btn {
+        display: inline-block; /* Show close button when mobile sidebar is open */
+    }
+    /* Hide desktop-specific title structures if they interfere */
+    #left-sidebar-pane.mobile-sidebar-open .sidebar-title-collapsed {
+        display: none;
+    }
+     #left-sidebar-pane.mobile-sidebar-open .sidebar-title-full {
+        display: inline; /* Ensure full title is visible */
+    }
+
+
+    /* Ensure text elements inside sidebar are visible when it's open on mobile,
+       even if desktop had them hidden in .collapsed state */
+    #left-sidebar-pane.mobile-sidebar-open.collapsed .nav-title-full,
+    #left-sidebar-pane.mobile-sidebar-open.collapsed #settings-panel h3,
+    #left-sidebar-pane.mobile-sidebar-open.collapsed #settings-panel .nav-title-full {
+        display: inline; /* Or block as appropriate */
+    }
+     #left-sidebar-pane.mobile-sidebar-open.collapsed #settings-panel .setting-item {
+        justify-content: flex-start; /* Realign settings */
+    }
+    #left-sidebar-pane.mobile-sidebar-open.collapsed #settings-panel .setting-item input[type="checkbox"] {
+        margin-right: 8px;
+    }
+
+    #left-sidebar-pane.collapsed #settings-panel,
+#left-sidebar-pane.collapsed #sidebar-scrollable-content {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
+}
+
+    #question-interaction-pane {
+        /* ... existing mobile styles ... */
+        /* If sidebar is fixed overlay, question pane doesn't need to worry about its width */
+    }
+
+    #map-pane-container {
+        /* ... existing mobile styles ... */
+    }
+}
+/* Responsive Design */
+@media (max-width: 900px) {
+    #question-interaction-pane {
+        min-width: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    #app-container-layout {
+        flex-direction: column;
+        height: auto;
+        overflow-y: auto;
+    }
+
+    #sidebar-toggle-btn {
+        display: none;
+    }
+
+    #mobile-header {
+        display: flex;
+    }
+
+    #left-sidebar-pane {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100%;
+        border-right: 1px solid var(--border-color);
+        border-bottom: none;
+        transition: left 0.3s ease-in-out;
+        z-index: 100;
+    }
+
+    #left-sidebar-pane.mobile-sidebar-open {
+        left: 0;
+        box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #left-sidebar-pane.collapsed {
+        width: 80%;
+        min-width: auto;
+    }
+
+    #left-sidebar-pane.collapsed .nav-title-full,
+    #left-sidebar-pane.collapsed .sidebar-title-full {
+        display: inline;
+    }
+
+    #left-sidebar-pane.collapsed .sidebar-title-collapsed {
+        display: none;
+    }
+
+    #question-interaction-pane {
+        width: 100%;
+        border-right: none;
+        height: calc(100vh - var(--header-height-mobile) - 350px);
+        min-height: 200px;
+    }
+
+    #map-pane-container {
+        width: 100%;
+        height: 350px;
+        flex-grow: 0;
+    }
+}

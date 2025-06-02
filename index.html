@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TenthPass.in - CBSE Map Pointing</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class=""> <!-- Class for dark-mode toggle -->
+    <div id="app-container-layout">
+
+        <!-- Left Sidebar: Sections & Settings -->
+        <aside id="left-sidebar-pane">
+            <div class="sidebar-header">
+                <button id="sidebar-toggle-btn" aria-label="Toggle Sidebar">
+                    <span>☰</span> <!-- Hamburger for expand, will change icon -->
+                </button>
+                <button id="mobile-sidebar-close-btn" aria-label="Close Sidebar Menu">
+                    <span>×</span> <!-- 'X' close icon -->
+                </button>
+                <h2 class="sidebar-title-full">TenthPass.in</h2>
+                <h2 class="sidebar-title-collapsed" style="display:none;">TP</h2> <!-- For collapsed state -->
+            </div>
+
+            <div id="sidebar-scrollable-content"> <!-- This div is key -->
+                <nav id="sections-nav">
+                    <h2 class="nav-title-full">Map Pointing</h2>
+                    <h3 class="nav-title-full">Quiz Sections</h3>
+                    <div id="random-quiz-sections">
+                        <button id="startRandomQuizBtnSidebar" class="nav-title-full">Random Quiz</button>
+                    </div>
+                    <div id="history-sections">
+                        <h4 class="nav-title-full">History</h4>
+                        <!-- JS will populate history sub-sections -->
+                    </div>
+                    <div id="geography-sections">
+                        <h4 class="nav-title-full">Geography</h4>
+                        <!-- JS will populate geography sub-sections -->
+                    </div>
+                </nav>
+                <!-- Note: Settings Panel is NOT inside sidebar-scrollable-content -->
+            </div>
+
+            <div id="settings-panel"> <!-- Settings panel is a direct child of left-sidebar-pane -->
+                <h3>Settings</h3>
+                <div class="setting-item">
+                    <label for="toggleHints"><input type="checkbox" id="toggleHints" checked> <span
+                            class="nav-title-full">Show Hints (Quiz)</span></label>
+                </div>
+                <div class="setting-item">
+                    <label for="toggleSignificance"><input type="checkbox" id="toggleSignificance" checked> <span
+                            class="nav-title-full">Show Explanation (Quiz)</span></label>
+                </div>
+                <div class="setting-item">
+                    <label for="toggleStudyLabels"><input type="checkbox" id="toggleStudyLabels" checked> <span
+                            class="nav-title-full">Show Labels on Map (Study Mode)</span></label>
+                </div>
+                <div class="setting-item">
+                    <label for="toggleStateBoundaries"><input type="checkbox" id="toggleStateBoundaries" checked> <span
+                            class="nav-title-full">Show State Boundaries</span></label> <!-- New -->
+                </div>
+                <div class="setting-item">
+                    <label for="toggleColorfulMap"><input type="checkbox" id="toggleColorfulMap"> <span
+                            class="nav-title-full">Use Colorful Map</span></label> <!-- New -->
+                </div>
+                <div class="setting-item">
+                    <label for="toggleDarkMode"><input type="checkbox" id="toggleDarkMode"> <span
+                            class="nav-title-full">Dark Mode (UI)</span></label>
+                </div>
+            </div>
+
+            <div class="sidebar-footer nav-title-full">
+                <p>© TenthPass.in 2025</p>
+            </div>
+        </aside>
+
+        <!-- Middle Pane: Question, Interaction, Feedback -->
+        <main id="question-interaction-pane">
+            <!-- Mobile Header with Hamburger for Sidebar -->
+            <div id="mobile-header">
+                <button id="mobile-sidebar-toggle" aria-label="Toggle Navigation Menu">
+                    <span>☰</span>
+                </button>
+                <span>TenthPass.in - CBSE Map Pointing</span>
+            </div>
+
+            <div id="quiz-active-message" class="active-view">
+                <p>Select a quiz section from the left sidebar to begin!</p>
+            </div>
+            <div id="quiz-content-area" class="hidden-view">
+                <!-- ... (rest of question-interaction-pane content remains the same) ... -->
+                <div id="quiz-status-header">
+                    <div>
+                        <h3 id="current-quiz-title">Quiz Title</h3>
+                    </div>
+                    <div>
+                        <span>Score: <span id="score">0</span>
+                            <span>&nbsp;--&nbsp;</span>
+                            <span>Question: <span id="question-progress">0/0</span>
+                    </div>
+                </div>
+                <div id="question-display">
+                    <h3 id="question-text">Question...</h3>
+                    <p class="hint" id="hint-text">Hint...</p>
+                </div>
+                <div id="answer-input-area">
+                    <div id="mcq-options-container" class="hidden-view"></div>
+                    <button id="submitAnswerBtn">Submit Guess</button>
+                </div>
+                <div id="feedback-display" class="hidden-view">
+                    <p id="feedback-text">Feedback...</p>
+                    <p id="significance-text" class="significance-text-class">Significance...</p>
+                    <button id="nextQuestionBtn">Next Question</button>
+                </div>
+            </div>
+            <div id="end-screen-content" class="hidden-view">
+                <h2>Quiz Complete!</h2>
+                <p>Final Score: <span id="final-score">0</span> / <span id="total-possible-score">0</span></p>
+                <button id="returnToSectionsBtn">Choose Another Quiz</button>
+            </div>
+            <div id="study-mode-content" class="hidden-view"> <!-- New view for showing all answers -->
+                <h3 id="study-mode-title">Viewing All Answers for: [Section Name]</h3>
+                <div id="study-items-list">
+                </div>
+                <button id="startQuizFromStudyBtn">Start Quiz for this Section</button>
+            </div>
+        </main>
+
+        <!-- Right Pane: Map -->
+        <aside id="map-pane-container">
+            <div id="map"></div>
+            <div id="map-overlay-info"></div>
+        </aside>
+    </div>
+    <div id="mobile-menu-overlay" class="mobile-overlay"></div>
+
+
+    <script src="locations.js"></script>
+    <script src="script.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJDHaFlZUl-kvumuFEOUtEPjgMOgFKprA&libraries=geometry,marker&loading=async&region=IN&callback=initApp">
+        </script>
+</body>
+
+</html>

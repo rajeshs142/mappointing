@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBSE Map Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #quiz-container {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        #map {
+            width: 100%;
+            height: 400px; /* Adjust as needed */
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+
+        #question-area, #feedback-area, #score-area {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-left: 3px solid #007bff;
+            background-color: #e9ecef;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .hint {
+            font-style: italic;
+            color: #555;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>CBSE Class 10 Map Quiz</h1>
+
+        <div id="score-area">
+            Score: <span id="score">0</span> | Question: <span id="question-count">0</span>/<span id="total-questions">0</span>
+        </div>
+
+        <div id="question-area">
+            <p id="question-text">Loading question...</p>
+            <p class="hint" id="hint-text"></p>
+        </div>
+
+        <div id="map"></div>
+
+        <div id="feedback-area">
+            <p id="feedback-text">Place your pin on the map and click "Submit Guess".</p>
+        </div>
+
+        <button id="submitGuessBtn" disabled>Submit Guess</button>
+        <button id="nextQuestionBtn" style="display: none;">Next Question</button>
+        <button id="playAgainBtn" style="display: none;">Play Again</button>
+    </div>
+
+    <script>
+        // --- Configuration ---
+        const ACCEPTABLE_POINT_RADIUS_KM = 50; // How close to be "correct" for points
+        const TOTAL_QUESTIONS_PER_GAME = 5; // Number of questions per game
+
+        // --- Map Item Data (Expand this significantly!) ---
+        const allMapItems = [
+            {
+                id: "hist_dandi",
+                name: "Dandi",
+                category: "History - Nationalism in India",
+                questionText: "Locate Dandi, associated with the Salt March.",
+                lat: 20.930,
+                lng: 72.870,
+                type: "point",
+                hint: "Coastal town in Gujarat."
+            },
+            {
+                id: "hist_amritsar",
+                name: "Amritsar",
+                category: "History - Nationalism in India",
+                questionText: "Locate Amritsar, site of the Jallianwala Bagh incident.",
+                lat: 31.6340,
+                lng: 74.8723,
+                type: "point",
+                hint: "Major city in Punjab."
+            },
+            {
+                id: "geo_dam_salal",
+                name: "Salal Dam",
+                category: "Geography - Water Resources",
+                questionText: "Locate the Salal Dam.",
+                lat: 33.1480,
+                lng: 74.8120,
+                type: "point",
+                hint: "On the Chenab river in J&K."
+            },
+            {
+                id: "geo_port_mumbai",
+                name: "Mumbai Port",
+                category: "Geography - Lifelines of National Economy",
+                questionText: "Locate the major sea port of Mumbai.",
+                lat: 18.9647,
+                lng: 72.8258,
+                type: "point",
+                hint: "Largest city on the west coast."
+            },
+            {
+                id: "geo_coal_raniganj",
+                name: "Raniganj Coalfield",
+                category: "Geography - Minerals & Energy",
+                questionText: "Locate the Raniganj coalfield.",
+                lat: 23.6113,
+                lng: 87.1288,
+                type: "point",
+                hint: "Located in West Bengal."
+            },
+            {
+                id: "geo_rice_punjab",
+                name: "Major Rice Area (Punjab)",
+                category: "Geography - Agriculture",
+                questionText: "Click on a major rice producing state: Punjab.",
+                lat: 30.7333, // Central point of Punjab for example
+                lng: 76.7794,
+                type: "area",
+                areaRadiusKm: 150, // Larger radius for a state-level area
+                hint: "A northern state known for the Green Revolution."
+            }
+            // Add many more items here from History and Geography syllabus
+        ];
+
+        // --- Global Variables ---
+        let map;
+        let currentQuestion;
+        let userMarker;
+        let correctLocationMarker;
+        let score = 0;
+        let questionsAnswered = 0;
+        let gameQuestions = [];
+
+        // --- DOM Elements ---
+        const scoreEl = document.getElementById('score');
+        const questionCountEl = document.getElementById('question-count');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const questionTextEl = document.getElementById('question-text');
+        const hintTextEl = document.getElementById('hint-text');
+        const feedbackTextEl = document.getElementById('feedback-text');
+        const submitGuessBtn = document.getElementById('submitGuessBtn');
+        const nextQuestionBtn = document.getElementById('nextQuestionBtn');
+        const playAgainBtn = document.getElementById('playAgainBtn');
+
+        // --- Functions ---
+
+        function initMap() {
+    const INDIA_BOUNDS = { north: 37.0, south: 7.0, west: 67.0, east: 98.0 };
+
+    // Define a custom map style to hide labels and features
+    const mapStyle = [
+        {
+            featureType: "all", // Applies to all features
+            elementType: "labels", // Specifically targets labels
+            stylers: [
+                { visibility: "off" } // Hide all labels
+            ]
+        },
+        {
+            featureType: "administrative", // Country, state, city boundaries
+            elementType: "geometry.stroke", // The boundary lines
+            stylers: [
+                { visibility: "on" }, // Keep boundary lines visible
+                { color: "#808080" }, // Grey color for boundaries
+                { weight: 0.8 }      // Thinner lines
+            ]
+        },
+        {
+            featureType: "administrative.country",
+            elementType: "geometry.stroke",
+            stylers: [
+                { color: "#000000" }, // Black for country outline
+                { weight: 1.5 }
+            ]
+        },
+        {
+            featureType: "administrative.province", // For state outlines
+            elementType: "geometry.stroke",
+            stylers: [
+                { color: "#888888" }, // Slightly darker grey for state lines
+                { weight: 1 }
+            ]
+        },
+        {
+            featureType: "road",
+            stylers: [{ visibility: "off" }]
+        },
+        {
+            featureType: "poi", // Points of Interest
+            stylers: [{ visibility: "off" }]
+        },
+        {
+            featureType: "transit",
+            stylers: [{ visibility: "off" }]
+        },
+        {
+            featureType: "landscape", // Terrain, land color
+            elementType: "geometry",
+            stylers: [
+                { color: "#f0f0f0" } // Light grey for land, or use #ffffff for white
+            ]
+        },
+        {
+            featureType: "water", // Water bodies
+            elementType: "geometry",
+            stylers: [
+                { color: "#c9dcec" } // Light blue for water
+            ]
+        }
+    ];
+
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 22.5937, lng: 78.9629 }, // Center of India
+        zoom: 5,
+        minZoom: 4,
+        maxZoom: 8,
+        restriction: { latLngBounds: INDIA_BOUNDS, strictBounds: false },
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: false,
+        zoomControl: true,
+        // Apply the custom style
+        styles: mapStyle
+    });
+
+    // ... (rest of your initMap function: click listener, startGame call)
+    map.addListener('click', (event) => {
+        // if (submitGuessBtn.disabled) return;
+
+        if (userMarker) {
+            userMarker.setMap(null);
+        }
+        userMarker = new google.maps.Marker({
+            position: event.latLng,
+            map: map,
+            draggable: true,
+            icon: {
+                url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+            }
+        });
+        submitGuessBtn.disabled = false;
+        feedbackTextEl.textContent = "Pin placed. Click 'Submit Guess'.";
+    });
+    startGame();
+}
+        // function initMap() {
+        //     const INDIA_BOUNDS = { north: 37.0, south: 7.0, west: 67.0, east: 98.0 };
+        //     map = new google.maps.Map(document.getElementById("map"), {
+        //         center: { lat: 22.5937, lng: 78.9629 },
+        //         zoom: 5,
+        //         minZoom: 4,
+        //         maxZoom: 8, // Adjust for better detail if needed
+        //         restriction: { latLngBounds: INDIA_BOUNDS, strictBounds: false },
+        //         mapTypeControl: false,
+        //         streetViewControl: false
+        //     });
+
+        //     map.addListener('click', (event) => {
+        //         if (submitGuessBtn.disabled) return; // Don't place marker if guess already submitted
+
+        //         if (userMarker) {
+        //             userMarker.setMap(null);
+        //         }
+        //         userMarker = new google.maps.Marker({
+        //             position: event.latLng,
+        //             map: map,
+        //             draggable: true,
+        //             icon: {
+        //                 url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+        //             }
+        //         });
+        //         submitGuessBtn.disabled = false;
+        //         feedbackTextEl.textContent = "Pin placed. Click 'Submit Guess'.";
+        //     });
+        //     startGame();
+        // }
+
+        function startGame() {
+            score = 0;
+            questionsAnswered = 0;
+            gameQuestions = shuffleArray([...allMapItems]).slice(0, TOTAL_QUESTIONS_PER_GAME);
+
+            scoreEl.textContent = score;
+            questionCountEl.textContent = questionsAnswered;
+            totalQuestionsEl.textContent = gameQuestions.length; // Use actual length of game questions
+
+            submitGuessBtn.style.display = 'inline-block';
+            nextQuestionBtn.style.display = 'none';
+            playAgainBtn.style.display = 'none';
+
+            loadNextQuestion();
+        }
+
+        function loadNextQuestion() {
+            if (userMarker) userMarker.setMap(null);
+            if (correctLocationMarker) correctLocationMarker.setMap(null);
+            userMarker = null;
+
+            if (questionsAnswered < gameQuestions.length) {
+                currentQuestion = gameQuestions[questionsAnswered];
+                questionTextEl.textContent = currentQuestion.questionText;
+                hintTextEl.textContent = currentQuestion.hint ? `Hint: ${currentQuestion.hint}` : "";
+                feedbackTextEl.textContent = "Place your pin on the map and click 'Submit Guess'.";
+                questionCountEl.textContent = questionsAnswered + 1;
+
+                submitGuessBtn.disabled = true; // Disabled until pin is placed
+                nextQuestionBtn.style.display = 'none';
+            } else {
+                endGame();
+            }
+        }
+
+        submitGuessBtn.addEventListener('click', () => {
+            if (!userMarker) {
+                feedbackTextEl.textContent = "Please place a pin on the map first!";
+                return;
+            }
+
+            submitGuessBtn.disabled = true;
+            const userPosition = userMarker.getPosition();
+            const correctPosition = { lat: currentQuestion.lat, lng: currentQuestion.lng };
+
+            const distance = google.maps.geometry.spherical.computeDistanceBetween(
+                new google.maps.LatLng(userPosition.lat(), userPosition.lng()),
+                new google.maps.LatLng(correctPosition.lat, correctPosition.lng)
+            ) / 1000; // Distance in km
+
+            let roundScore = 0;
+            let feedbackMsg = "";
+
+            let isCorrect = false;
+            if (currentQuestion.type === "point") {
+                isCorrect = distance <= ACCEPTABLE_POINT_RADIUS_KM;
+            } else if (currentQuestion.type === "area" && currentQuestion.areaRadiusKm) {
+                // For area, check if user clicked within the defined radius of the area's center
+                isCorrect = distance <= currentQuestion.areaRadiusKm;
+            }
+
+
+            if (isCorrect) {
+                roundScore = 10; // Example score
+                feedbackMsg = `Correct! Well done. Distance: ${distance.toFixed(1)} km.`;
+                score += roundScore;
+            } else {
+                feedbackMsg = `Not quite. The correct location was ${distance.toFixed(1)} km away.`;
+                 // Optionally, give partial score for being close
+                if (distance < ACCEPTABLE_POINT_RADIUS_KM * 3) { // Example: if within 3x the radius
+                    roundScore = 2;
+                    feedbackMsg += ` You were close!`;
+                    score += roundScore;
+                }
+            }
+
+
+            scoreEl.textContent = score;
+            feedbackTextEl.textContent = feedbackMsg;
+
+            // Show correct location
+            correctLocationMarker = new google.maps.Marker({
+                position: correctPosition,
+                map: map,
+                title: "Correct Location: " + currentQuestion.name,
+                icon: {
+                    url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+                }
+            });
+
+            questionsAnswered++;
+            nextQuestionBtn.style.display = 'inline-block';
+        });
+
+        nextQuestionBtn.addEventListener('click', loadNextQuestion);
+        playAgainBtn.addEventListener('click', startGame);
+
+        function endGame() {
+            questionTextEl.textContent = "Game Over!";
+            hintTextEl.textContent = "";
+            feedbackTextEl.textContent = `Your final score is ${score} out of ${gameQuestions.length * 10}.`; // Assuming 10 pts per Q
+            submitGuessBtn.style.display = 'none';
+            nextQuestionBtn.style.display = 'none';
+            playAgainBtn.style.display = 'inline-block';
+            if (userMarker) userMarker.setMap(null);
+            // Keep correctLocationMarker from last question visible or clear it
+        }
+
+        // Fisher-Yates Shuffle
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+    </script>
+    <!-- IMPORTANT: Replace YOUR_GOOGLE_MAPS_API_KEY with your actual API key -->
+    <!-- Ensure you have also enabled "Maps JavaScript API" and "Places API" (or geometry library) -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJDHaFlZUl-kvumuFEOUtEPjgMOgFKprA&libraries=geometry&callback=initMap">
+    </script>
+</body>
+</html>

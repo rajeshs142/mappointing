@@ -1,0 +1,239 @@
+/* style.css */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #eef1f5; /* Light grey-blue background */
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to top for longer content */
+    min-height: 100vh;
+    padding-top: 20px; /* Add some space at the top */
+    padding-bottom: 20px; /* Add some space at the bottom */
+}
+
+#app-container {
+    width: 95%;
+    max-width: 900px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Contains floated children or margins */
+}
+
+header {
+    background-color: #4a90e2; /* A calm blue */
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    border-bottom: 3px solid #357ABD;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+main#main-content {
+    padding: 20px;
+}
+
+/* View Management */
+.hidden-view {
+    display: none !important;
+}
+.active-view {
+    display: block; /* Or flex, grid depending on internal layout */
+}
+
+
+/* Main Menu Specifics */
+#main-menu-container h2 {
+    color: #357ABD;
+    text-align: center;
+    margin-bottom: 25px;
+}
+#main-menu-container h3 {
+    color: #555;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+#themed-challenges button,
+#random-challenge button {
+    display: block;
+    width: 90%; /* Make buttons wider */
+    max-width: 300px; /* But not too wide on large screens */
+    margin: 8px auto; /* Center buttons */
+    padding: 12px 15px;
+}
+
+
+/* Quiz View Specifics */
+#quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+}
+
+#quiz-header p {
+    margin: 0;
+    font-weight: bold;
+    color: #4a90e2;
+}
+
+#question-display {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f0f8ff; /* Alice blue for question */
+    border-left: 4px solid #4a90e2;
+    border-radius: 4px;
+}
+#question-display h3 {
+    margin-top: 0;
+    color: #333;
+}
+.hint {
+    font-style: italic;
+    color: #5a5a5a;
+    font-size: 0.95em;
+    margin-top: 8px;
+}
+
+#map-container {
+    position: relative; /* For potential overlays */
+    margin-bottom: 20px;
+}
+
+#map {
+    width: 100%;
+    height: 400px; /* Adjust as needed */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#map-overlay-info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 1.5em;
+    /* Initially hidden, shown for MCQ map markers like 'A', 'B' */
+}
+
+
+#answer-input-area {
+    text-align: center; /* Center the submit button */
+    margin-bottom: 20px;
+}
+
+#mcq-options-container {
+    margin-bottom: 15px;
+}
+#mcq-options-container button {
+    display: block;
+    width: 80%;
+    margin: 5px auto; /* Centered options */
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+}
+#mcq-options-container button:hover {
+    background-color: #e0e0e0;
+    border-color: #bbb;
+}
+#mcq-options-container button.selected { /* Style for selected MCQ */
+    background-color: #4a90e2;
+    color: white;
+    border-color: #357ABD;
+}
+
+
+#feedback-display {
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 4px;
+    text-align: center;
+}
+#feedback-display.correct {
+    background-color: #d4edda; /* Greenish for correct */
+    border-left: 4px solid #28a745;
+    color: #155724;
+}
+#feedback-display.incorrect {
+    background-color: #f8d7da; /* Reddish for incorrect */
+    border-left: 4px solid #dc3545;
+    color: #721c24;
+}
+#feedback-display p {
+    margin: 5px 0;
+}
+#significance-text {
+    font-style: italic;
+    margin-top: 10px !important;
+}
+
+
+/* End Screen Specifics */
+#end-screen-container {
+    text-align: center;
+}
+#end-screen-container h2 {
+    color: #4a90e2;
+}
+#review-incorrect-answers {
+    margin-top: 15px;
+    text-align: left;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+#review-incorrect-answers p {
+    font-size: 0.9em;
+}
+
+
+/* General Button Styling */
+button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    margin: 10px 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.2s ease-in-out;
+}
+button:hover:not(:disabled) {
+    background-color: #357ABD;
+}
+button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #f0f0f0;
+    color: #777;
+    font-size: 0.9em;
+    border-top: 1px solid #ddd;
+}

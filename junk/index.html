@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBSE Class 10 Map Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-container">
+        <header>
+            <h1>CBSE Class 10 Map Master</h1>
+        </header>
+
+        <main id="main-content">
+            <!-- Main Menu will be dynamically inserted here -->
+            <div id="main-menu-container" class="active-view">
+                <h2>Choose Your Challenge!</h2>
+                <div id="themed-challenges">
+                    <h3>Themed Challenges:</h3>
+                    <!-- Buttons for themed challenges will be populated by JS -->
+                </div>
+                <div id="random-challenge">
+                    <h3>Random Review:</h3>
+                    <button id="startRandomQuizBtn">Start Random Review (10 Questions)</button>
+                    <!-- Add options for 5, 15, 20 questions later if desired -->
+                </div>
+            </div>
+
+            <!-- Quiz View will be dynamically inserted here or shown/hidden -->
+            <div id="quiz-view-container" class="hidden-view">
+                <div id="quiz-header">
+                    <p>Score: <span id="score">0</span></p>
+                    <p>Question: <span id="question-progress">1/10</span></p>
+                </div>
+
+                <div id="question-display">
+                    <h3 id="question-text">Question will appear here...</h3>
+                    <p class="hint" id="hint-text">Hint will appear here...</p>
+                </div>
+
+                <div id="map-container">
+                    <div id="map"></div>
+                    <!-- For MCQ type questions, this area will show a marker/letter -->
+                    <div id="map-overlay-info"></div>
+                </div>
+
+                <div id="answer-input-area">
+                    <!-- For MCQ questions -->
+                    <div id="mcq-options-container" class="hidden-view">
+                        <!-- Options will be populated by JS -->
+                    </div>
+                    <button id="submitAnswerBtn">Submit Guess</button>
+                </div>
+
+                <div id="feedback-display" class="hidden-view">
+                    <p id="feedback-text">Feedback will appear here.</p>
+                    <p id="significance-text">Significance will appear here.</p>
+                    <button id="nextQuestionBtn">Next Question</button>
+                </div>
+            </div>
+
+            <!-- End Screen will be dynamically inserted here or shown/hidden -->
+            <div id="end-screen-container" class="hidden-view">
+                <h2>Quiz Complete!</h2>
+                <p>Your Final Score: <span id="final-score">0</span> out of <span id="total-possible-score">0</span></p>
+                <div id="review-incorrect-answers">
+                    <!-- Incorrect answers could be listed here -->
+                </div>
+                <button id="playAgainMenuBtn">Play Another Quiz</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2023 Map Master - For Educational Purposes</p>
+        </footer>
+    </div>
+
+    <!-- Load Data First -->
+    <script src="locations.js"></script>
+    <!-- Then Core Logic -->
+    <script src="script.js"></script>
+    <!-- Google Maps API - IMPORTANT: Replace YOUR_GOOGLE_MAPS_API_KEY -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJDHaFlZUl-kvumuFEOUtEPjgMOgFKprA&libraries=geometry,marker&callback=initApp">
+    </script>
+    <!-- Added 'marker' library for potential advanced marker features -->
+</body>
+</html>
