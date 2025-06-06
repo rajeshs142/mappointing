@@ -11,8 +11,8 @@ let studyModeMarkers = []; // To keep track of markers in study mode
 let currentStudyingSectionName = "";
 let currentStudyingSectionItems = [];
 
-const ACCEPTABLE_POINT_RADIUS_KM = 50; // How close to be "correct" for points
-const DEFAULT_RANDOM_QUESTIONS = 10;
+const ACCEPTABLE_POINT_RADIUS_KM = 100; // How close to be "correct" for points
+const DEFAULT_RANDOM_QUESTIONS = 15;
 
 // Default map center and zoom for India
 const DEFAULT_INDIA_CENTER = { lat: 22.5937, lng: 78.9629 };
