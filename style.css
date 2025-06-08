@@ -8,7 +8,7 @@
     --primary-accent-darker: #357ABD;
     --border-color: #d1d8e0;
     --hint-color: #5a5a5a;
-    
+
     /* Feedback Colors */
     --correct-bg: #d4edda;
     --correct-text: #155724;
@@ -154,11 +154,13 @@ body {
     color: var(--text-color);
     opacity: 0.8;
 }
-#sections-nav #random-quiz-sections{
+
+#sections-nav #random-quiz-sections {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 #sections-nav button,
 #startRandomQuizBtnSidebar {
     display: block;
@@ -512,21 +514,28 @@ body.dark-mode button:disabled {
     align-items: center;
     margin-bottom: 5px;
 }
+
 .section-item-group .start-quiz-for-section-btn {
     flex-grow: 1;
     text-align: left;
-    margin-right: 5px; /* Space before view all button */
-    margin-bottom: 0; /* Remove default button margin */
+    margin-right: 5px;
+    /* Space before view all button */
+    margin-bottom: 0;
+    /* Remove default button margin */
 }
+
 .section-item-group .view-all-for-section-btn {
-    padding: 8px 10px; /* Adjust size */
+    padding: 8px 10px;
+    /* Adjust size */
     background-color: var(--primary-bg);
     color: var(--primary-accent);
     border: 1px solid var(--border-color);
-    min-width: 40px; /* Ensure it's clickable */
+    min-width: 40px;
+    /* Ensure it's clickable */
     flex-shrink: 0;
     margin-bottom: 0;
 }
+
 .section-item-group .view-all-for-section-btn:hover {
     background-color: var(--border-color);
 }
@@ -534,19 +543,24 @@ body.dark-mode button:disabled {
 
 /* Study Mode in Question Pane */
 #study-mode-content {
-    padding: 20px; /* Already has padding from parent */
+    padding: 20px;
+    /* Already has padding from parent */
 }
+
 #study-mode-content h3 {
     color: var(--primary-accent-darker);
     margin-top: 0;
     margin-bottom: 15px;
     text-align: center;
 }
+
 #study-items-list {
-    max-height: calc(100vh - 250px); /* Adjust based on other elements in pane */
+    max-height: calc(100vh - 250px);
+    /* Adjust based on other elements in pane */
     overflow-y: auto;
     margin-bottom: 15px;
 }
+
 .study-item-card {
     background-color: var(--primary-bg);
     border: 1px solid var(--border-color);
@@ -554,21 +568,26 @@ body.dark-mode button:disabled {
     padding: 10px 15px;
     margin-bottom: 10px;
     border-radius: 4px;
-    cursor: pointer; /* To indicate it can be clicked to focus map */
+    cursor: pointer;
+    /* To indicate it can be clicked to focus map */
 }
+
 .study-item-card:hover {
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-left-color: var(--primary-accent-darker);
 }
+
 .study-item-card h4 {
     margin-top: 0;
     margin-bottom: 5px;
     color: var(--text-color);
 }
+
 .study-item-card p {
     margin: 3px 0;
     font-size: 0.9em;
 }
+
 .study-item-card .hint {
     color: var(--hint-color);
 }
@@ -595,44 +614,56 @@ body.dark-mode button:disabled {
     /* Add cursor to indicate it's clickable when collapsed */
     cursor: pointer;
 }
+
 #left-sidebar-pane.collapsed .nav-title-full {
     display: none;
 }
+
 #left-sidebar-pane.collapsed .sidebar-title-full {
     display: none;
 }
+
 #left-sidebar-pane.collapsed .sidebar-title-collapsed {
     display: inline;
 }
+
 #left-sidebar-pane.collapsed #settings-panel .setting-item label {
     /* justify-content: center; */
 }
+
 #left-sidebar-pane.collapsed #settings-panel .setting-item input[type="checkbox"] {
     margin-right: 0;
 }
+
 /* New: Hide the scrollable content when collapsed */
 #left-sidebar-pane.collapsed #sidebar-scrollable-content {
     visibility: hidden;
-    opacity: 0; /* For a smoother transition if desired */
+    opacity: 0;
+    /* For a smoother transition if desired */
     transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
 }
 
 #sidebar-scrollable-content {
     flex-grow: 1;
     overflow-y: auto;
-    visibility: visible; /* Default state */
+    visibility: visible;
+    /* Default state */
     opacity: 1;
-    transition: opacity 0.2s ease-in-out 0.1s, visibility 0.2s ease-in-out 0.1s; /* Delay for expand */
+    transition: opacity 0.2s ease-in-out 0.1s, visibility 0.2s ease-in-out 0.1s;
+    /* Delay for expand */
 }
 
 /* InfoWindow Custom Styling */
 .custom-infowindow-content {
-    padding: 5px; /* Add a little padding inside the InfoWindow */
-    max-width: 250px; /* Prevent it from getting too wide */
+    padding: 5px;
+    /* Add a little padding inside the InfoWindow */
+    max-width: 250px;
+    /* Prevent it from getting too wide */
     font-size: 0.9em;
 }
 
-.custom-infowindow-content h4 { /* Title inside InfoWindow */
+.custom-infowindow-content h4 {
+    /* Title inside InfoWindow */
     margin: 0 0 5px 0;
     font-size: 1.1em;
     color: var(--primary-accent-darker);
@@ -652,13 +683,16 @@ body.dark-mode .custom-infowindow-content {
        you might need to use more advanced techniques like custom overlays,
        or see if newer versions of the API offer more styling hooks.
        For now, we style the content *inside*. */
-    color: var(--text-color); /* Uses dark mode text color */
+    color: var(--text-color);
+    /* Uses dark mode text color */
     background-color: var(--secondary-bg);
 }
 
 body.dark-mode .custom-infowindow-content h4 {
-    color: var(--primary-accent); /* Uses dark mode accent for title */
-    background-color: var(--secondary-bg); /* Ensure background matches */
+    color: var(--primary-accent);
+    /* Uses dark mode accent for title */
+    background-color: var(--secondary-bg);
+    /* Ensure background matches */
 }
 
 /* You might want to style the default InfoWindow close button if it clashes.
@@ -666,13 +700,17 @@ body.dark-mode .custom-infowindow-content h4 {
    e.g., .gm-style-iw-c button (inspect to find the exact class).
    Example (may need adjustment):
 */
-body.dark-mode .gm-style-iw-c button span, /* Close button 'x' */
-body.dark-mode .gm-style-iw-tc::after { /* Arrow pointing to marker */
+body.dark-mode .gm-style-iw-c button span,
+/* Close button 'x' */
+body.dark-mode .gm-style-iw-tc::after {
+    /* Arrow pointing to marker */
     /* filter: invert(1) hue-rotate(180deg); /* A common trick to invert colors */
     /* This is a bit of a hack and might not look perfect.
        The best approach is if Google Maps API allows styling these directly or uses CSS vars. */
-    color: var(--primary-accent); /* Uses dark mode accent for title */
-    background-color: var(--secondary-bg); /* Ensure background matches */
+    color: var(--primary-accent);
+    /* Uses dark mode accent for title */
+    background-color: var(--secondary-bg);
+    /* Ensure background matches */
 }
 
 /* Left Sidebar Pane */
@@ -682,8 +720,10 @@ body.dark-mode .gm-style-iw-tc::after { /* Arrow pointing to marker */
     background-color: var(--secondary-bg);
     border-right: 1px solid var(--border-color);
     display: flex;
-    flex-direction: column; /* Key for stacking header, content, settings, footer */
-    height: 100vh; /* Ensure it takes full viewport height */
+    flex-direction: column;
+    /* Key for stacking header, content, settings, footer */
+    height: 100vh;
+    /* Ensure it takes full viewport height */
     transition: width 0.3s ease-in-out, min-width 0.3s ease-in-out;
     position: relative;
     z-index: 20;
@@ -695,17 +735,24 @@ body.dark-mode .gm-style-iw-tc::after { /* Arrow pointing to marker */
     min-width: var(--sidebar-width-collapsed);
     cursor: pointer;
 }
+
 /* ... (other .collapsed styles for hiding text remain the same) ... */
-#left-sidebar-pane.collapsed #settings-panel { /* When sidebar is collapsed, settings might also hide text or change layout */
+#left-sidebar-pane.collapsed #settings-panel {
+    /* When sidebar is collapsed, settings might also hide text or change layout */
     /* padding: 10px 5px; /* Smaller padding when collapsed */
 }
+
 #left-sidebar-pane.collapsed #settings-panel h3,
 #left-sidebar-pane.collapsed #settings-panel .setting-item .nav-title-full {
-    display: none; /* Hide text in settings when sidebar is collapsed */
+    display: none;
+    /* Hide text in settings when sidebar is collapsed */
 }
+
 #left-sidebar-pane.collapsed #settings-panel .setting-item {
-    justify-content: center; /* Center checkboxes */
+    justify-content: center;
+    /* Center checkboxes */
 }
+
 #left-sidebar-pane.collapsed #settings-panel .setting-item input[type="checkbox"] {
     margin-right: 0;
 }
@@ -716,23 +763,30 @@ body.dark-mode .gm-style-iw-tc::after { /* Arrow pointing to marker */
     background-color: var(--primary-accent);
     color: white;
     text-align: center;
-    flex-shrink: 0; /* Prevent shrinking */
+    flex-shrink: 0;
+    /* Prevent shrinking */
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: var(--header-height-mobile); /* Or a fixed desktop header height */
+    height: var(--header-height-mobile);
+    /* Or a fixed desktop header height */
 }
+
 /* ... (sidebar-header h2, #sidebar-toggle-btn styles) ... */
 
 
-#sidebar-scrollable-content { /* Contains #sections-nav */
-    flex-grow: 1; /* Takes up available vertical space */
-    overflow-y: auto; /* This part scrolls if #sections-nav is too long */
+#sidebar-scrollable-content {
+    /* Contains #sections-nav */
+    flex-grow: 1;
+    /* Takes up available vertical space */
+    overflow-y: auto;
+    /* This part scrolls if #sections-nav is too long */
     /* visibility and opacity transitions remain */
     visibility: visible;
     opacity: 1;
     transition: opacity 0.2s ease-in-out 0.1s, visibility 0.2s ease-in-out 0.1s;
 }
+
 /* Visibility hidden for collapsed sidebar scrollable content */
 #left-sidebar-pane.collapsed #settings-panel,
 #left-sidebar-pane.collapsed #sidebar-scrollable-content {
@@ -745,21 +799,26 @@ body.dark-mode .gm-style-iw-tc::after { /* Arrow pointing to marker */
 #sections-nav {
     padding: 15px 10px;
 }
+
 /* ... (other #sections-nav styles) ... */
 
 
 #settings-panel {
     padding: 15px 10px;
     border-top: 1px solid var(--border-color);
-    flex-shrink: 0; /* Prevent shrinking - STICKY AT BOTTOM before footer */
-    background-color: var(--secondary-bg); /* Ensure it has a background */
+    flex-shrink: 0;
+    /* Prevent shrinking - STICKY AT BOTTOM before footer */
+    background-color: var(--secondary-bg);
+    /* Ensure it has a background */
 }
+
 #settings-panel h3 {
     margin-top: 0;
     margin-bottom: 10px;
     font-size: 1.1em;
     color: var(--primary-accent-darker);
 }
+
 /* ... (other #settings-panel label, input styles) ... */
 
 
@@ -769,8 +828,10 @@ body.dark-mode .gm-style-iw-tc::after { /* Arrow pointing to marker */
     font-size: 0.8em;
     color: var(--hint-color);
     border-top: 1px solid var(--border-color);
-    background-color: var(--secondary-bg); /* Ensure it has a background */
-    flex-shrink: 0; /* Prevent shrinking - STICKY AT BOTTOM */
+    background-color: var(--secondary-bg);
+    /* Ensure it has a background */
+    flex-shrink: 0;
+    /* Prevent shrinking - STICKY AT BOTTOM */
 }
 
 
@@ -778,15 +839,19 @@ body.dark-mode .gm-style-iw-tc::after { /* Arrow pointing to marker */
 
 /* Ensure that when the sidebar is collapsed, the settings text also hides if desired */
 #left-sidebar-pane.collapsed #settings-panel h3,
-#left-sidebar-pane.collapsed #settings-panel .nav-title-full { /* Assuming setting labels use .nav-title-full for text part */
+#left-sidebar-pane.collapsed #settings-panel .nav-title-full {
+    /* Assuming setting labels use .nav-title-full for text part */
     display: none;
 }
+
 #left-sidebar-pane.collapsed #settings-panel .setting-item {
     /* You might want to center the checkboxes if the labels are hidden */
     justify-content: center;
 }
+
 #left-sidebar-pane.collapsed #settings-panel .setting-item input[type="checkbox"] {
-    margin-left: 0; /* Adjust if they were centered before */
+    margin-left: 0;
+    /* Adjust if they were centered before */
 }
 
 /* Left Sidebar Pane */
@@ -794,31 +859,42 @@ body.dark-mode .gm-style-iw-tc::after { /* Arrow pointing to marker */
     /* ... existing styles ... */
     /* Ensure it can be positioned correctly for mobile overlay */
     /* position: fixed; Change to fixed for mobile overlay behavior */
-    left: 0; top: 0; height: 100%; /* Default for desktop, will be overridden by mobile */
-    transition: width 0.3s ease-in-out, min-width 0.3s ease-in-out, left 0.3s ease-in-out; /* Add left transition */
+    left: 0;
+    top: 0;
+    height: 100%;
+    /* Default for desktop, will be overridden by mobile */
+    transition: width 0.3s ease-in-out, min-width 0.3s ease-in-out, left 0.3s ease-in-out;
+    /* Add left transition */
 }
 
 /* ... (existing .collapsed styles) ... */
 
 .sidebar-header {
     /* ... existing styles ... */
-    position: relative; /* For positioning close button if needed */
+    position: relative;
+    /* For positioning close button if needed */
 }
 
-#sidebar-toggle-btn { /* Desktop toggle button */
+#sidebar-toggle-btn {
+    /* Desktop toggle button */
     /* ... existing styles ... */
-    display: inline-block; /* Default for desktop */
+    display: inline-block;
+    /* Default for desktop */
 }
 
-#mobile-sidebar-close-btn { /* Mobile close button inside sidebar */
+#mobile-sidebar-close-btn {
+    /* Mobile close button inside sidebar */
     background: none;
     border: none;
     color: white;
-    font-size: 1.8em; /* Make it prominent */
+    font-size: 1.8em;
+    /* Make it prominent */
     cursor: pointer;
     padding: 0 10px;
-    display: none; /* Hidden by default, shown on mobile when sidebar is open */
-    position: absolute; /* Position it nicely, e.g., top right of sidebar header */
+    display: none;
+    /* Hidden by default, shown on mobile when sidebar is open */
+    position: absolute;
+    /* Position it nicely, e.g., top right of sidebar header */
     top: 50%;
     right: 10px;
     transform: translateY(-50%);
@@ -832,12 +908,15 @@ body.dark-mode .gm-style-iw-tc::after { /* Arrow pointing to marker */
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 99; /* Below sidebar, above content */
-    display: none; /* Toggled by JS */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    /* Below sidebar, above content */
+    display: none;
+    /* Toggled by JS */
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
+
 .mobile-overlay.active {
     display: block;
     opacity: 1;
@@ -852,31 +931,46 @@ body.dark-mode .gm-style-iw-tc::after { /* Arrow pointing to marker */
         /* position: relative; /* From before */
     }
 
-    #sidebar-toggle-btn { display: none !important; } /* Hide desktop toggle fully on mobile */
+    #sidebar-toggle-btn {
+        display: none !important;
+    }
+
+    /* Hide desktop toggle fully on mobile */
     /* mobile-header (for question pane) still uses mobile-sidebar-toggle (hamburger) */
 
 
     #left-sidebar-pane {
-        left: -100%; /* Off-screen by default */
-        width: 80%;   /* Or your preferred mobile width */
+        left: -100%;
+        /* Off-screen by default */
+        width: 80%;
+        /* Or your preferred mobile width */
         max-width: 300px;
         /* height: 100%; full height overlay from its default fixed positioning */
-        border-right: 1px solid var(--border-color); /* It will have a right border again */
-        box-shadow: 2px 0 10px rgba(0,0,0,0.2); /* Add shadow when it slides in */
+        border-right: 1px solid var(--border-color);
+        /* It will have a right border again */
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+        /* Add shadow when it slides in */
         /* transition for left is already on the default style */
     }
+
     #left-sidebar-pane.mobile-sidebar-open {
-        left: 0; /* Slide in */
+        left: 0;
+        /* Slide in */
     }
+
     #left-sidebar-pane.mobile-sidebar-open #mobile-sidebar-close-btn {
-        display: inline-block; /* Show close button when mobile sidebar is open */
+        display: inline-block;
+        /* Show close button when mobile sidebar is open */
     }
+
     /* Hide desktop-specific title structures if they interfere */
     #left-sidebar-pane.mobile-sidebar-open .sidebar-title-collapsed {
         display: none;
     }
-     #left-sidebar-pane.mobile-sidebar-open .sidebar-title-full {
-        display: inline; /* Ensure full title is visible */
+
+    #left-sidebar-pane.mobile-sidebar-open .sidebar-title-full {
+        display: inline;
+        /* Ensure full title is visible */
     }
 
 
@@ -885,21 +979,25 @@ body.dark-mode .gm-style-iw-tc::after { /* Arrow pointing to marker */
     #left-sidebar-pane.mobile-sidebar-open.collapsed .nav-title-full,
     #left-sidebar-pane.mobile-sidebar-open.collapsed #settings-panel h3,
     #left-sidebar-pane.mobile-sidebar-open.collapsed #settings-panel .nav-title-full {
-        display: inline; /* Or block as appropriate */
+        display: inline;
+        /* Or block as appropriate */
     }
-     #left-sidebar-pane.mobile-sidebar-open.collapsed #settings-panel .setting-item {
-        justify-content: flex-start; /* Realign settings */
+
+    #left-sidebar-pane.mobile-sidebar-open.collapsed #settings-panel .setting-item {
+        justify-content: flex-start;
+        /* Realign settings */
     }
+
     #left-sidebar-pane.mobile-sidebar-open.collapsed #settings-panel .setting-item input[type="checkbox"] {
         margin-right: 8px;
     }
 
     #left-sidebar-pane.collapsed #settings-panel,
-#left-sidebar-pane.collapsed #sidebar-scrollable-content {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
-}
+    #left-sidebar-pane.collapsed #sidebar-scrollable-content {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
+    }
 
     #question-interaction-pane {
         /* ... existing mobile styles ... */
@@ -910,6 +1008,7 @@ body.dark-mode .gm-style-iw-tc::after { /* Arrow pointing to marker */
         /* ... existing mobile styles ... */
     }
 }
+
 /* Responsive Design */
 @media (max-width: 900px) {
     #question-interaction-pane {
@@ -976,4 +1075,42 @@ body.dark-mode .gm-style-iw-tc::after { /* Arrow pointing to marker */
         height: 350px;
         flex-grow: 0;
     }
+}
+
+#sections-nav button,
+/* This already covers the new button if it has no specific class */
+#startRandomQuizBtnSidebar,
+#viewAllLocationsBtn {
+    /* Explicitly target if needed, or ensure it matches general button styles */
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 8px 12px;
+    margin-bottom: 5px;
+    background-color: transparent;
+    /* Or your default button bg */
+    color: var(--text-color);
+    /* Or your default button text color */
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+#sections-nav button:hover,
+#startRandomQuizBtnSidebar:hover,
+#viewAllLocationsBtn:hover {
+    background-color: var(--primary-bg);
+    /* Or your button hover bg */
+    border-color: var(--border-color);
+    /* Or your button hover border */
+}
+
+/* Specific style if you want the "All Locations" button to stand out slightly */
+#viewAllLocationsBtn {
+    font-weight: bold;
+    /* background-color: var(--primary-accent-lighter); /* Example */
+    /* border-bottom: 2px solid var(--primary-accent); */
+    margin-bottom: 10px;
+    /* Add some space below it */
 }

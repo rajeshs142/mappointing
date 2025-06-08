@@ -25,12 +25,12 @@
             </div>
 
             <div id="sidebar-scrollable-content"> <!-- This div is key -->
+                <!-- (Inside #left-sidebar-pane #sections-nav) -->
                 <nav id="sections-nav">
-                    <h2 class="nav-title-full">Map Pointing</h2>
                     <h3 class="nav-title-full">Quiz Sections</h3>
-                    <div id="random-quiz-sections">
-                        <button id="startRandomQuizBtnSidebar" class="nav-title-full">Random Quiz</button>
-                    </div>
+                    <button id="viewAllLocationsBtn" class="nav-title-full"> <!-- New Button -->
+                         All Locations
+                    </button>
                     <div id="history-sections">
                         <h4 class="nav-title-full">History</h4>
                         <!-- JS will populate history sub-sections -->
@@ -39,6 +39,7 @@
                         <h4 class="nav-title-full">Geography</h4>
                         <!-- JS will populate geography sub-sections -->
                     </div>
+                    <button id="startRandomQuizBtnSidebar" class="nav-title-full">Random Review</button>
                 </nav>
                 <!-- Note: Settings Panel is NOT inside sidebar-scrollable-content -->
             </div>
